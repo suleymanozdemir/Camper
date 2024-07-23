@@ -51,7 +51,7 @@ export default function RootLayout() {
     const getToken = async () => {
         const token = await AsyncStorage.getItem("token");
         if (token) {
-            //return router.replace("/(app)/(home)/(trip)/addTripPage");
+            //return router.replace("/home/addTripPage");
         }
     };
 
@@ -75,7 +75,9 @@ export default function RootLayout() {
                 >
                     <Stack.Screen name="index" />
                     <Stack.Screen name="login" />
-                    <Stack.Screen name="(app)/(home)" />
+                    <Stack.Screen name="forgotPassword" />
+                    <Stack.Screen name="register/index" />
+                    <Stack.Screen name="home" />
                 </Stack>
             </ThemeProvider>
         </PersistQueryClientProvider>

@@ -5,7 +5,7 @@ import OTPScreen from "../../screens/OTPScreen";
 const ForgotPassword = () => {
     return (
         <SafeAreaView className="flex-1 justify-center items-start bg-white">
-            <OTPScreen route={"/(register)/registered"} />
+            <OTPScreen route={"/register/registered"} />
         </SafeAreaView>
     );
 };

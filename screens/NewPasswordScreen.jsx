@@ -1,23 +1,13 @@
 import { router } from "expo-router";
 import React, { useCallback } from "react";
-import {
-    KeyboardAvoidingView,
-    ScrollView,
-    Text,
-    TouchableOpacity,
-    View,
-} from "react-native";
-import ChevronLeft from "../assets/icon/Outline/chevron-left.svg";
+import { KeyboardAvoidingView, ScrollView, Text, View } from "react-native";
 import { Button } from "../components/Button";
+import { InlineHeader } from "../components/InlineHeader";
 import { Input } from "../components/Input";
 
 const NewPasswordScreen = () => {
-    const returnLoginScreen = useCallback(() => {
-        router.back();
-    }, []);
-
     const sendBtnClick = useCallback(() => {
-        router.push("(forgotPassword)/passwordChanged");
+        router.push("/forgotPassword/passwordChanged");
     }, []);
 
     return (
@@ -27,17 +17,7 @@ const NewPasswordScreen = () => {
                 keyboardShouldPersistTaps="always"
             >
                 <View style={{ flex: 1 }} className="px-10">
-                    <TouchableOpacity onPress={returnLoginScreen}>
-                        <View className="flex-row flex-1 mt-4">
-                            <ChevronLeft width={36} height={32} fill={"#000"} />
-                            <Text
-                                style={{ fontFamily: "SF-Pro-Display-Medium" }}
-                                className="text-2xl ml-4 "
-                            >
-                                New Password
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
+                    <InlineHeader label="New Password" />
                     <View className="mt-4">
                         <Text
                             style={{ fontFamily: "SF-Pro-Display-Regular" }}

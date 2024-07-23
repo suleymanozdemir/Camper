@@ -38,7 +38,7 @@ export default function OnboardingScreen() {
     });
 
     const goRegisterScreen = useCallback(() => {
-        router.push("/(register)/register");
+        router.push("/register");
     }, []);
 
     const goLoginScreen = useCallback(() => {

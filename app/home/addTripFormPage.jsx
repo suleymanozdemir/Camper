@@ -1,6 +1,6 @@
 import React from "react";
 import { SafeAreaView } from "react-native";
-import AddTripFormScreen from "../../../../screens/AddTripFormScreen";
+import AddTripFormScreen from "../../screens/AddTripFormScreen";
 
 const AddTripFormPage = () => {
     return (

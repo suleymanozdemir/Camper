@@ -7,9 +7,9 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
-import Award from "../../../assets/icon/Outline/award.svg";
-import ChevronLeft from "../../../assets/icon/Outline/chevron-left.svg";
-import { Card } from "../../../components/Card";
+import Award from "../../assets/icon/Outline/award.svg";
+import ChevronLeft from "../../assets/icon/Outline/chevron-left.svg";
+import { Card } from "../../components/Card";
 
 const NotificationPage = () => {
     const goBack = () => {

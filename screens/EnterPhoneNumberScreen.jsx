@@ -1,24 +1,13 @@
 import { router } from "expo-router";
 import React, { useCallback } from "react";
-import {
-    KeyboardAvoidingView,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
-} from "react-native";
-import ChevronLeft from "../assets/icon/Outline/chevron-left.svg";
+import { KeyboardAvoidingView, ScrollView, Text, View } from "react-native";
 import { Button } from "../components/Button";
+import { InlineHeader } from "../components/InlineHeader";
 import { Input } from "../components/Input";
 
 const EnterPhoneNumberScreen = () => {
-    const returnLoginScreen = useCallback(() => {
-        router.back();
-    }, []);
-
     const sendBtnClick = useCallback(() => {
-        router.push("(forgotPassword)/otpScreen");
+        router.navigate("/forgotPassword/otpScreen");
     }, []);
 
     return (
@@ -29,17 +18,7 @@ const EnterPhoneNumberScreen = () => {
                 contentContainerStyle={{ flex: 1 }}
             >
                 <View style={{ flex: 1 }} className="px-10">
-                    <TouchableOpacity onPress={returnLoginScreen}>
-                        <View className="flex-row flex-auto items-center mt-4">
-                            <ChevronLeft width={32} height={32} fill="black" />
-                            <Text
-                                style={{ fontFamily: "SF-Pro-Display-Medium" }}
-                                className="text-2xl ml-4 "
-                            >
-                                Forgot Password
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
+                    <InlineHeader label="Forgot password" />
                     <View className="flex-initial mt-4">
                         <Text
                             style={{ fontFamily: "SF-Pro-Display-Regular" }}
@@ -70,7 +49,5 @@ const EnterPhoneNumberScreen = () => {
         </KeyboardAvoidingView>
     );
 };
-
-const styles = StyleSheet.create({});
 
 export default EnterPhoneNumberScreen;

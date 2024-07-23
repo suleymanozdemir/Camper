@@ -7,8 +7,7 @@ import { Drawer } from "expo-router/drawer";
 import React, { useState } from "react";
 import { Platform, useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import Home from "../../../assets/icon/Outline/home.svg";
-import { Colors } from "../../../constants/Colors";
+import { Colors } from "../../constants/Colors";
 
 export default function RootLayout() {
     const colorScheme = useColorScheme();
@@ -43,18 +42,7 @@ export default function RootLayout() {
                             backgroundColor: Colors.drawerBgColors.bg,
                         },
                     }}
-                >
-                    <Drawer.Screen
-                        name="(trip)"
-                        options={{
-                            headerTitle: "Camping Trips",
-                            drawerLabel: "Home",
-                            drawerIcon: () => (
-                                <Home width={24} height={24} fill={"#4D7C0F"} />
-                            ),
-                        }}
-                    />
-                </Drawer>
+                ></Drawer>
             </GestureHandlerRootView>
         </ThemeProvider>
     );

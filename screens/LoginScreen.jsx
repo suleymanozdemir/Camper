@@ -33,11 +33,12 @@ const LoginScreen = () => {
     });
 
     const onForgotPasswordClick = useCallback(() => {
-        router.push("(forgotPassword)/phoneNumber");
+        router.push("/forgotPassword");
     }, []);
 
     const handleSubmit = useCallback(async (values) => {
         setValues(values);
+        setLoading(true);
         console.log("deneme");
         try {
             const res = await fetch(`${API_URL}/auth/local`, {
@@ -56,13 +57,14 @@ const LoginScreen = () => {
                     JSON.stringify(response.jwt)
                 );
 
-                router.navigate("/(app)/(home)/addTripPage");
+                router.navigate("/(app)/(home)/home");
             } else {
                 console.log(res);
             }
         } catch (error) {
             console.log(error, "error");
         }
+        setLoading(false);
     }, []);
 
     return (
@@ -75,7 +77,7 @@ const LoginScreen = () => {
                 keyboardShouldPersistTaps={"always"}
                 keyboardDismissMode={"on-drag"}
             >
-                <Spin />
+                <Spin spining={loading} size="large" />
                 <View style={{ flex: 1, paddingHorizontal: 42 }}>
                     <View style={{ flex: 1, justifyContent: "center" }}>
                         <Logo width={"100%"} height={63} />
@@ -133,9 +135,7 @@ const LoginScreen = () => {
                                         label="Register"
                                         buttonType="ghost"
                                         containerClassName=""
-                                        onPress={() =>
-                                            router.push("/(register)/register")
-                                        }
+                                        onPress={() => router.push("/register")}
                                     />
                                 </View>
                             )}

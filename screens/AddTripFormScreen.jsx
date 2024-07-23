@@ -91,7 +91,7 @@ const AddTripFormScreen = () => {
                                     buttonType="ghost"
                                     containerClassName=""
                                     onPress={() =>
-                                        router.push("/(register)/register")
+                                        router.push("/register/register")
                                     }
                                 />
                             </View>

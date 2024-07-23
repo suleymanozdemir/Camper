@@ -2,7 +2,7 @@ import React from "react";
 import { SafeAreaView } from "react-native";
 import RegisterScreen from "../../screens/RegisterScreen";
 
-const Register = () => {
+const RegisterIndex = () => {
     return (
         <SafeAreaView className="flex-1 flex-col bg-white">
             <RegisterScreen />
@@ -10,4 +10,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default RegisterIndex;

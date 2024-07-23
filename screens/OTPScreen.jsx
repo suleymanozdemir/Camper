@@ -7,21 +7,16 @@ import {
     ScrollView,
     StyleSheet,
     Text,
-    TouchableOpacity,
     View,
 } from "react-native";
-import ChevronLeft from "../assets/icon/Outline/chevron-left.svg";
 import { Button } from "../components/Button";
+import { InlineHeader } from "../components/InlineHeader";
 
 const OTPScreen = ({ route }) => {
     const [code, setCode] = useState("");
 
-    const returnLoginScreen = useCallback(() => {
-        router.back();
-    }, []);
-
     const sendOtp = useCallback(() => {
-        router.push(route ? route : "(forgotPassword)/newPassword");
+        router.navigate(route ? route : "/forgotPassword/newPassword");
     }, []);
 
     return (
@@ -31,17 +26,7 @@ const OTPScreen = ({ route }) => {
                 keyboardShouldPersistTaps="always"
             >
                 <View style={{ flex: 1 }} className="px-10">
-                    <TouchableOpacity onPress={returnLoginScreen}>
-                        <View className="flex-row items-center mt-4">
-                            <ChevronLeft width={32} height={32} fill={"#000"} />
-                            <Text
-                                style={{ fontFamily: "SF-Pro-Display-Medium" }}
-                                className="text-2xl ml-4 "
-                            >
-                                Confirm OTP
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
+                    <InlineHeader label="Confirm OTP" />
                     <View className="mt-4" style={{ flex: 1 }}>
                         <Text
                             style={{ fontFamily: "SF-Pro-Display-Regular" }}

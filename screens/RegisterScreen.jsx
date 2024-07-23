@@ -7,17 +7,21 @@ import * as yup from "yup";
 import Logo from "../assets/images/logo/Logo.svg";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
+import Spin from "../components/Spining";
+import { API_URL } from "../services/api";
 
 const RegisterScreen = () => {
     const [values, setValues] = useState({
-        name: "",
-        email: "",
-        phone: "",
-        password: "",
+        username: null,
+        email: null,
+        phone: null,
+        password: null,
     });
 
+    const [loading, setLoading] = useState(false);
+
     const registerSchema = yup.object().shape({
-        name: yup.string().required("Name is required."),
+        username: yup.string().required("Name is required."),
         email: yup
             .string()
             .email("Please enter valid email")
@@ -29,12 +33,25 @@ const RegisterScreen = () => {
             .required("Password is required."),
     });
 
-    const onSubmitPressed = (values) => {
+    const onSubmitPressed = async (values) => {
         setValues(values);
-        router.navigate({
-            pathname: "/(register)/otpScreen",
-            params: { postMessage: "deneme" },
-        });
+        try {
+            setLoading(true);
+            const res = await fetch(`${API_URL}/auth/local/register`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(values),
+            });
+            if (res.ok) {
+                const response = await res.json();
+                router.navigate("/login");
+            }
+        } catch (error) {
+            console.log(error.name, "error");
+        }
+        setLoading(false);
     };
 
     return (
@@ -57,7 +74,9 @@ const RegisterScreen = () => {
                 }}
                 keyboardDismissMode={"on-drag"}
             >
+                <Spin spining={loading} size="large" />
                 <View style={{ flex: 1, justifyContent: "center" }}>
+                    <Spin />
                     <View style={{ flex: 1, justifyContent: "center" }}>
                         <Logo width={"100%"} height={63} />
                     </View>
@@ -74,9 +93,9 @@ const RegisterScreen = () => {
                                     secureTextEntry={false}
                                     type="default"
                                     isRequired={true}
-                                    name="name"
-                                    onChange={handleChange("name")}
-                                    error={errors.name}
+                                    name="username"
+                                    onChange={handleChange("username")}
+                                    error={errors.username}
                                 />
                                 <Input
                                     inputMode="email"

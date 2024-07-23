@@ -1,13 +1,29 @@
 /* eslint-disable no-undef */
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
     DarkTheme,
     DefaultTheme,
     ThemeProvider,
 } from "@react-navigation/native";
+import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
+import { QueryClient } from "@tanstack/react-query";
+import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { React, useEffect } from "react";
 import { useColorScheme } from "react-native";
+
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            cacheTime: 1000 * 60 * 60 * 24 * 5, // 5 days
+        },
+    },
+});
+
+const asyncStoragePersister = createAsyncStoragePersister({
+    storage: AsyncStorage,
+});
 
 SplashScreen.preventAutoHideAsync();
 
@@ -36,17 +52,22 @@ export default function RootLayout() {
     }
 
     return (
-        <ThemeProvider
-            value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        <PersistQueryClientProvider
+            client={queryClient}
+            persistOptions={{ persister: asyncStoragePersister }}
         >
-            <Stack
-                screenOptions={{
-                    headerShown: false,
-                }}
+            <ThemeProvider
+                value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
             >
-                <Stack.Screen name="index" />
-                <Stack.Screen name="login" />
-            </Stack>
-        </ThemeProvider>
+                <Stack
+                    screenOptions={{
+                        headerShown: false,
+                    }}
+                >
+                    <Stack.Screen name="index" />
+                    <Stack.Screen name="login" />
+                </Stack>
+            </ThemeProvider>
+        </PersistQueryClientProvider>
     );
 }

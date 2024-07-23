@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { Formik } from "formik";
 import { React, useCallback, useState } from "react";
@@ -13,15 +14,16 @@ import * as yup from "yup";
 import Logo from "../assets/images/logo/Logo.svg";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
+import { API_URL } from "../services/api";
 
 const LoginScreen = () => {
     const [values, setValues] = useState({
-        email: "suleymanozde@asdad",
-        password: "123213213123",
+        identifier: null,
+        password: null,
     });
 
     const loginSchema = yup.object().shape({
-        email: yup
+        identifier: yup
             .string()
             .email("Please enter valid email")
             .required("Email address is required."),
@@ -32,10 +34,26 @@ const LoginScreen = () => {
         router.push("(forgotPassword)/phoneNumber");
     }, []);
 
-    const handleSubmit = useCallback((values) => {
+    const handleSubmit = useCallback(async (values) => {
         setValues(values);
-
-        router.navigate("/(home)/campingTrips/addTripPage");
+        try {
+            const res = await fetch(`${API_URL}/auth/local`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(values),
+            });
+            console.log(res);
+            if (res.ok) {
+                const response = await res.json();
+                console.log();
+                await AsyncStorage.setItem("token", response.jwt);
+                router.navigate("/(home)/campingTrips/addTripPage");
+            }
+        } catch (error) {
+            console.log(error.name, "error");
+        }
     }, []);
 
     return (
@@ -68,7 +86,7 @@ const LoginScreen = () => {
                                 <View style={{ flex: 1 }}>
                                     <Input
                                         type="email"
-                                        onChange={handleChange("email")}
+                                        onChange={handleChange("identifier")}
                                         label="Email"
                                         inputMode="email"
                                         key={1}

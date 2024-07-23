@@ -1,4 +1,5 @@
 import { router } from "expo-router";
+import PropTypes from "prop-types";
 import React, { useCallback } from "react";
 import { Text, View } from "react-native";
 import Hurrey from "../assets/images/common/Hurrey.jsx";
@@ -36,6 +37,10 @@ const HurreyScreen = ({ message }) => {
             </View>
         </View>
     );
+};
+
+HurreyScreen.propTypes = {
+    message: PropTypes.string,
 };
 
 export default HurreyScreen;

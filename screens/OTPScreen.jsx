@@ -1,6 +1,7 @@
 import { FontAwesome5 } from "@expo/vector-icons";
 import OTPInputView from "@twotalltotems/react-native-otp-input";
 import { router } from "expo-router";
+import PropTypes from "prop-types";
 import React, { useCallback, useState } from "react";
 import {
     KeyboardAvoidingView,
@@ -114,4 +115,9 @@ const styles = StyleSheet.create({
         borderBottomColor: "#84CC16",
     },
 });
+
+OTPScreen.propTypes = {
+    route: PropTypes.string,
+};
+
 export default OTPScreen;

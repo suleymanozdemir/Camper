@@ -13,6 +13,7 @@ type InputProps = {
     ref: HTMLElement;
     isRequired: boolean;
     isValid: boolean;
+    error: string;
 };
 
 export function Input({
@@ -24,7 +25,6 @@ export function Input({
     inputMode,
     secureTextEntry,
     wrongPassword,
-    isRequired,
     error,
     isValid,
 }: InputProps) {

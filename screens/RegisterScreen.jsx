@@ -66,13 +66,7 @@ const RegisterScreen = () => {
                         initialValues={values}
                         onSubmit={onSubmitPressed}
                     >
-                        {({
-                            handleSubmit,
-                            values,
-                            handleChange,
-                            errors,
-                            isValid,
-                        }) => (
+                        {({ handleSubmit, handleChange, errors }) => (
                             <View style={{ flex: 4 }}>
                                 <Input
                                     inputMode="text"

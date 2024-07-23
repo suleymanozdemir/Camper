@@ -31,7 +31,7 @@ export function Button({
                 ...styles,
                 ...buttonStyles[buttonType],
             }}
-            className={`py-4 items-center justify-center rounded-xl border  ${containerClassName}`}
+            className={`py-3 items-center justify-center rounded-xl border ${containerClassName}`}
         >
             <Text
                 style={{

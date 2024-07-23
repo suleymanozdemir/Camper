@@ -12,7 +12,6 @@ type InputProps = {
     wrongPassword: boolean;
     ref: HTMLElement;
     isRequired: boolean;
-    isValid: boolean;
     error: string;
 };
 
@@ -21,15 +20,12 @@ export function Input({
     type,
     placeholder,
     onChange,
-    value,
     inputMode,
     secureTextEntry,
     wrongPassword,
     error,
-    isValid,
 }: InputProps) {
     const [isActiveInput, setIsActiveInput] = useState(false);
-
     return (
         <>
             {label && (
@@ -43,7 +39,7 @@ export function Input({
 
             <TextInput
                 className={`bg-gray-50 p-4 rounded-xl border ${
-                    wrongPassword || isValid
+                    wrongPassword || error
                         ? "border-red-700"
                         : !isActiveInput
                         ? "border-gray-100"
@@ -58,7 +54,6 @@ export function Input({
                 keyboardType={type}
                 placeholder={placeholder}
                 inputMode={inputMode}
-                value={value}
                 onChangeText={onChange}
                 maxLength={100}
                 secureTextEntry={secureTextEntry}
@@ -66,7 +61,7 @@ export function Input({
                 onBlur={(e) => setIsActiveInput(false)}
             />
             {error && (
-                <Text className="text-xs text-red-500 mt-1">{error}</Text>
+                <Text className="text-xs text-red-700 mt-1">{error}</Text>
             )}
         </>
     );

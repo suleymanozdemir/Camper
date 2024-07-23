@@ -21,7 +21,7 @@ const RegisterScreen = () => {
         email: yup
             .string()
             .email("Please enter valid email")
-            .required("Email Address is required."),
+            .required("Email address is required."),
         phone: yup.number().required("Phone number is required."),
         password: yup
             .string()

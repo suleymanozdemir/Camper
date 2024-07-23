@@ -1,3 +1,5 @@
+import { router } from "expo-router";
+import { Formik } from "formik";
 import { React, useCallback, useState } from "react";
 import {
     KeyboardAvoidingView,
@@ -7,23 +9,31 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
+import * as yup from "yup";
+import Logo from "../assets/images/logo/Logo.svg";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 
-import { router } from "expo-router";
-import Logo from "../assets/images/logo/Logo.svg";
-
 const LoginScreen = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [isPasswordCorrect, setIsPasswordCorrect] = useState(true);
+    const [values, setValues] = useState({
+        email: "",
+        password: "",
+    });
 
-    const onLoginBtnClick = useCallback(() => {
-        setIsPasswordCorrect(!isPasswordCorrect);
-    }, [email, password, isPasswordCorrect]);
+    const loginSchema = yup.object().shape({
+        email: yup
+            .string()
+            .email("Please enter valid email")
+            .required("Email address is required."),
+        password: yup.string().required("Password is required."),
+    });
 
     const onForgotPasswordClick = useCallback(() => {
         router.push("(forgotPassword)/phoneNumber");
+    }, []);
+
+    const handleSubmit = useCallback((values) => {
+        setValues(values);
     }, []);
 
     return (
@@ -47,53 +57,60 @@ const LoginScreen = () => {
                             justifyContent: "center",
                         }}
                     >
-                        <View style={{ flex: 1 }}>
-                            <Input
-                                type="email"
-                                onChange={setEmail}
-                                label="Email"
-                                inputMode="email"
-                                value={email}
-                                key={1}
-                            />
-                            <Input
-                                type="password"
-                                onChange={setPassword}
-                                label="Password"
-                                inputMode="text"
-                                secureTextEntry={true}
-                                value={password}
-                                wrongPassword={!isPasswordCorrect}
-                                key={2}
-                            />
-                            <TouchableOpacity
-                                style={{ alignSelf: "center" }}
-                                className="text-gray-400"
-                                onPress={() => onForgotPasswordClick()}
-                            >
-                                <Text
-                                    style={styles.forGotPassWordText}
-                                    className="mb-2 text-lg"
-                                >
-                                    Forgot Password?
-                                </Text>
-                            </TouchableOpacity>
-                            <Button
-                                onPress={() => onLoginBtnClick()}
-                                styles={{ marginBottom: 16 }}
-                                label="Log in"
-                                buttonType="success"
-                                containerClassName="mt-4"
-                            />
-                            <Button
-                                label="Register"
-                                buttonType="ghost"
-                                containerClassName="mt-4"
-                                onPress={() =>
-                                    router.push("/(register)/register")
-                                }
-                            />
-                        </View>
+                        <Formik
+                            initialValues={values}
+                            validationSchema={loginSchema}
+                            onSubmit={(values) => handleSubmit(values)}
+                        >
+                            {({ handleSubmit, handleChange, errors }) => (
+                                <View style={{ flex: 1 }}>
+                                    <Input
+                                        type="email"
+                                        onChange={handleChange("email")}
+                                        label="Email"
+                                        inputMode="email"
+                                        key={1}
+                                        error={errors.email}
+                                    />
+                                    <Input
+                                        type="password"
+                                        onChange={handleChange("password")}
+                                        label="Password"
+                                        inputMode="text"
+                                        secureTextEntry={true}
+                                        key={2}
+                                        error={errors.password}
+                                    />
+                                    <TouchableOpacity
+                                        style={{ alignSelf: "center" }}
+                                        className="text-gray-400"
+                                        onPress={onForgotPasswordClick}
+                                    >
+                                        <Text
+                                            style={styles.forGotPassWordText}
+                                            className="mb-2 text-lg"
+                                        >
+                                            Forgot Password?
+                                        </Text>
+                                    </TouchableOpacity>
+                                    <Button
+                                        onPress={handleSubmit}
+                                        styles={{ marginBottom: 16 }}
+                                        label="Log in"
+                                        buttonType="success"
+                                        containerClassName="mt-4"
+                                    />
+                                    <Button
+                                        label="Register"
+                                        buttonType="ghost"
+                                        containerClassName="mt-4"
+                                        onPress={() =>
+                                            router.push("/(register)/register")
+                                        }
+                                    />
+                                </View>
+                            )}
+                        </Formik>
                     </View>
                 </View>
             </ScrollView>

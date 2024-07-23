@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import {
     React,
     StyleSheet,
@@ -8,102 +7,18 @@ import {
     View,
 } from "react-native";
 import Animated, {
-    Extrapolate,
-    interpolate,
     useAnimatedRef,
     useAnimatedScrollHandler,
-    useAnimatedStyle,
     useSharedValue,
 } from "react-native-reanimated";
 
+import { Button } from "@/components/Button";
 import { router } from "expo-router";
 import { useCallback } from "react";
 import { Navigation } from "../components/Navigation";
 import { Pagination } from "../components/Pagination";
-import { theme } from "../constants/theme";
 import { data } from "../data/screens";
-
-const RenderItem = ({ item, index, x }) => {
-    const { width: SCREEN_WIDTH } = useWindowDimensions();
-
-    const imageAnimatedStyle = useAnimatedStyle(() => {
-        const opacityAnimation = interpolate(
-            x.value,
-            [
-                (index - 1) * SCREEN_WIDTH,
-                index * SCREEN_WIDTH,
-                (index + 1) * SCREEN_WIDTH,
-            ],
-            [0, 1, 0],
-            Extrapolate.CLAMP
-        );
-
-        const translateYAnimation = interpolate(
-            x.value,
-            [
-                (index - 1) * SCREEN_WIDTH,
-                index * SCREEN_WIDTH,
-                (index + 1) * SCREEN_WIDTH,
-            ],
-            [100, 0, 100],
-            Extrapolate.CLAMP
-        );
-
-        return {
-            width: SCREEN_WIDTH * 0.8,
-            height: SCREEN_WIDTH * 0.8,
-            opacity: opacityAnimation,
-            transform: [{ translateY: translateYAnimation }],
-        };
-    });
-
-    const textAnimatedStyle = useAnimatedStyle(() => {
-        const opacityAnimation = interpolate(
-            x.value,
-            [
-                (index - 1) * SCREEN_WIDTH,
-                index * SCREEN_WIDTH,
-                (index + 1) * SCREEN_WIDTH,
-            ],
-            [0, 1, 0],
-            Extrapolate.CLAMP
-        );
-
-        const translateYAnimation = interpolate(
-            x.value,
-            [
-                (index - 1) * SCREEN_WIDTH,
-                index * SCREEN_WIDTH,
-                (index + 1) * SCREEN_WIDTH,
-            ],
-            [100, 0, 100],
-            Extrapolate.CLAMP
-        );
-
-        return {
-            opacity: opacityAnimation,
-            transform: [{ translateY: translateYAnimation }],
-        };
-    });
-
-    return (
-        <View style={[styles.itemContainer, { width: SCREEN_WIDTH }]}>
-            <Animated.Image
-                source={item.image}
-                style={{ ...imageAnimatedStyle }}
-            />
-
-            <Animated.View style={textAnimatedStyle}>
-                <Text className="text-gray-100" style={styles.itemTitle}>
-                    {item.title}
-                </Text>
-                <Text className="text-gray-100" style={styles.itemText}>
-                    {item.text}
-                </Text>
-            </Animated.View>
-        </View>
-    );
-};
+import RenderItem from "../utils/renderItems";
 
 export default function OnboardingScreen() {
     const { width: SCREEN_WIDTH } = useWindowDimensions();
@@ -126,9 +41,14 @@ export default function OnboardingScreen() {
         router.push("/(register)/register");
     }, []);
 
+    const goLoginScreen = useCallback(() => {
+        router.push("/login");
+    }, []);
+
     return (
         <View style={styles.container}>
             <Animated.FlatList
+                className="flex-auto"
                 ref={flatListRef}
                 data={data}
                 keyExtractor={(item) => String(item.id)}
@@ -144,7 +64,7 @@ export default function OnboardingScreen() {
                 onViewableItemsChanged={onViewableItemsChanged}
             />
 
-            <View style={styles.footerContainer}>
+            <View className="px-4 flex-row justify-between flex-1 mt-4">
                 <Navigation
                     flatListRef={flatListRef}
                     flatListIndex={flatListIndex}
@@ -153,19 +73,34 @@ export default function OnboardingScreen() {
                     <Pagination data={data} screenWidth={SCREEN_WIDTH} x={x} />
                 </Navigation>
             </View>
-            <View style={styles.registerText}>
-                <View>
-                    <Text>Don’t have an Account?</Text>
+
+            <View className="">
+                <View className="px-4 ">
+                    <Button
+                        label="Log in"
+                        buttonType="success"
+                        onPress={goLoginScreen}
+                    />
                 </View>
-                <View style={{ marginLeft: 6 }}>
-                    <TouchableOpacity onPress={goRegisterScreen}>
+                <View className="flex-row mt-4 justify-center ">
+                    <View>
                         <Text
-                            style={{ fontWeight: "500" }}
-                            className="text-gray-900"
+                            style={{ fontFamily: "SF-Pro-Display-Regular" }}
+                            className="text-gray-900 text-base"
                         >
-                            Register
+                            Don’t have an Account?
                         </Text>
-                    </TouchableOpacity>
+                    </View>
+                    <View className="ml-2">
+                        <TouchableOpacity onPress={goRegisterScreen}>
+                            <Text
+                                style={{ fontFamily: "SF-Pro-Display-Medium" }}
+                                className="text-gray-900 text-base"
+                            >
+                                Register
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         </View>
@@ -176,44 +111,4 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    itemContainer: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "space-around",
-    },
-    itemTitle: {
-        fontFamily: "SF-Pro-Display-Bold",
-        fontSize: 32,
-        textAlign: "center",
-        marginBottom: 10,
-        color: theme.colors.textTitleColor,
-    },
-    itemText: {
-        fontFamily: "SF-Pro-Display-Light",
-        textAlign: "center",
-        fontSize: 16,
-        lineHeight: 24,
-        marginHorizontal: 30,
-        color: theme.colors.textColor,
-    },
-    footerContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        margin: 20,
-    },
-    registerText: {
-        fontFamily: "SF-Pro-Display-Light",
-        flex: 0.2,
-        justifyContent: "center",
-        alignItems: "center",
-        fontSize: 16,
-        flexDirection: "row",
-    },
 });
-
-RenderItem.propTypes = {
-    item: PropTypes.object,
-    index: PropTypes.number,
-    x: PropTypes.object,
-};

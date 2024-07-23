@@ -6,7 +6,6 @@ import {
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
-import { NativeBaseProvider } from "native-base";
 import { React, useEffect } from "react";
 import { useColorScheme } from "react-native";
 
@@ -23,33 +22,31 @@ export default function RootLayout() {
         "SF-Pro-Display-Black": require("./../assets/fonts/SF-Pro-Display-Black.otf"),
         "SF-Pro-Display-Heavy": require("./../assets/fonts/SF-Pro-Display-Heavy.otf"),
         "SF-Pro-Display-Light": require("./../assets/fonts/SF-Pro-Display-Light.otf"),
-        "SF-Pro-Display-SemiBold": require("./../assets/fonts/SF-Pro-Display-Light.otf"),
+        "SF-Pro-Display-SemiBold": require("./../assets/fonts/SF-Pro-Display-Semibold.otf"),
     });
 
     useEffect(() => {
         if (loaded || error) {
             SplashScreen.hideAsync();
         }
-    }, [loaded, error]);
+    }, [loaded]);
 
     if (!loaded && !error) {
         return null;
     }
 
     return (
-        <NativeBaseProvider>
-            <ThemeProvider
-                value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        <ThemeProvider
+            value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
+            <Stack
+                screenOptions={{
+                    headerShown: false,
+                }}
             >
-                <Stack
-                    screenOptions={{
-                        headerShown: false,
-                    }}
-                >
-                    <Stack.Screen name="index" />
-                    <Stack.Screen name="login" />
-                </Stack>
-            </ThemeProvider>
-        </NativeBaseProvider>
+                <Stack.Screen name="index" />
+                <Stack.Screen name="login" />
+            </Stack>
+        </ThemeProvider>
     );
 }

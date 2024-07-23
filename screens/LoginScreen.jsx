@@ -16,8 +16,8 @@ import { Input } from "../components/Input";
 
 const LoginScreen = () => {
     const [values, setValues] = useState({
-        email: "",
-        password: "",
+        email: "suleymanozde@asdad",
+        password: "123213213123",
     });
 
     const loginSchema = yup.object().shape({
@@ -34,6 +34,8 @@ const LoginScreen = () => {
 
     const handleSubmit = useCallback((values) => {
         setValues(values);
+
+        router.navigate("/(home)/campingTrips/addTripPage");
     }, []);
 
     return (
@@ -83,7 +85,7 @@ const LoginScreen = () => {
                                     />
                                     <TouchableOpacity
                                         style={{ alignSelf: "center" }}
-                                        className="text-gray-400"
+                                        className="text-gray-400 mt-4"
                                         onPress={onForgotPasswordClick}
                                     >
                                         <Text
@@ -95,15 +97,14 @@ const LoginScreen = () => {
                                     </TouchableOpacity>
                                     <Button
                                         onPress={handleSubmit}
-                                        styles={{ marginBottom: 16 }}
                                         label="Log in"
                                         buttonType="success"
-                                        containerClassName="mt-4"
+                                        containerClassName="my-4"
                                     />
                                     <Button
                                         label="Register"
                                         buttonType="ghost"
-                                        containerClassName="mt-4"
+                                        containerClassName=""
                                         onPress={() =>
                                             router.push("/(register)/register")
                                         }

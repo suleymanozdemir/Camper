@@ -1,4 +1,3 @@
-import { FontAwesome5 } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useCallback } from "react";
 import {
@@ -8,6 +7,7 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
+import ChevronLeft from "../assets/icon/Outline/chevron-left.svg";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 
@@ -28,12 +28,8 @@ const NewPasswordScreen = () => {
             >
                 <View style={{ flex: 1 }} className="px-10">
                     <TouchableOpacity onPress={returnLoginScreen}>
-                        <View className="flex-row flex-auto items-center mt-4">
-                            <FontAwesome5
-                                name="chevron-left"
-                                size={14}
-                                color="black"
-                            />
+                        <View className="flex-row flex-1 mt-4">
+                            <ChevronLeft width={36} height={32} fill={"#000"} />
                             <Text
                                 style={{ fontFamily: "SF-Pro-Display-Medium" }}
                                 className="text-2xl ml-4 "

@@ -7,6 +7,7 @@ import {
     Vibration,
     View,
 } from "react-native";
+import Award from "./../assets/icon/Outline/award.svg";
 import CopyIcon from "./../assets/icon/Outline/copy.svg";
 
 type CardProps = {
@@ -24,7 +25,7 @@ export function Card({
     cardType,
     title,
     content,
-    icon,
+    icon = <Award />,
     iconColor = "#365314",
     iconSize = [24, 24],
 }: CardProps) {
@@ -35,7 +36,7 @@ export function Card({
 
     return (
         <View
-            className="rounded-2xl bg-lime-50 p-4 space-y-2"
+            className="rounded-2xl bg-lime-50 p-4 space-y-2 mb-4"
             style={{ ...styles[type] }}
         >
             {cardType === "info" && (

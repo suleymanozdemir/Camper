@@ -1,25 +1,19 @@
 import {
     DarkTheme,
     DefaultTheme,
-    DrawerActions,
     ThemeProvider,
 } from "@react-navigation/native";
-import { useNavigation } from "expo-router";
 import { Drawer } from "expo-router/drawer";
-import React from "react";
-import { Text, TouchableOpacity, useColorScheme, View } from "react-native";
+import React, { useState } from "react";
+import { Platform, useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import Bell from "../../assets/icon/Outline/bell.svg";
-import Grid from "../../assets/icon/Outline/grid.svg";
+
 import Home from "../../assets/icon/Outline/home.svg";
+import { Colors } from "../../constants/Colors";
 
 export default function RootLayout() {
     const colorScheme = useColorScheme();
-    const navigation = useNavigation();
-
-    const openDrawer = () => {
-        navigation.dispatch(DrawerActions.openDrawer());
-    };
+    const [isOpen, setIsOpen] = useState(false);
 
     return (
         <ThemeProvider
@@ -27,72 +21,37 @@ export default function RootLayout() {
         >
             <GestureHandlerRootView style={{ flex: 1 }}>
                 <Drawer
+                    screenListeners={(x) =>
+                        setIsOpen(!!x.navigation.getState().history[1]?.status)
+                    }
                     screenOptions={{
-                        headerShown: true,
+                        headerShown: false,
                         headerLargeTitleShadowVisible: false,
-                        headerTintColor: "#000",
-                        drawerActiveBackgroundColor: "#fff",
-                        drawerContentStyle: {
-                            flexDirection: "row",
-                            backgroundColor: "#65A30D",
+                        drawerActiveBackgroundColor:
+                            Colors.drawerBgColors.activebg,
+                        drawerInactiveBackgroundColor:
+                            Colors.drawerBgColors.transparent,
+                        drawerActiveTintColor: Colors.drawerBgColors.active,
+                        drawerInactiveTintColor: Colors.drawerBgColors.inactive,
+                        overlayColor: Colors.drawerBgColors.transparent,
+                        drawerHideStatusBarOnOpen:
+                            Platform.OS === "ios" ? true : false,
+                        drawerStyle: {
+                            backgroundColor: Colors.drawerBgColors.bg,
+                            width: "60%",
                         },
-                        drawerActiveTintColor: "#365314",
-                        drawerItemStyle: {
-                            flex: 1,
-                            width: 100,
+                        sceneContainerStyle: {
+                            backgroundColor: Colors.drawerBgColors.bg,
                         },
-                        drawerContentContainerStyle: {
-                            flex: 1,
-                        },
-                        headerLeft: () => (
-                            <TouchableOpacity onPress={openDrawer}>
-                                <Grid width={32} height={32} fill={"#000"} />
-                            </TouchableOpacity>
-                        ),
-                        headerRight: () => (
-                            <TouchableOpacity>
-                                <Bell width={32} height={32} fill="#000" />
-                            </TouchableOpacity>
-                        ),
                     }}
                 >
                     <Drawer.Screen
                         name="campingTrips/addTripPage"
                         options={{
                             headerTitle: "Camping Trips",
-                            drawerLabel: () => (
-                                <View className="flex-auto">
-                                    <Text className="flex-auto ">Deneme</Text>
-                                </View>
-                            ),
+                            drawerLabel: "Home",
                             drawerIcon: () => (
-                                <View className="flex-1">
-                                    <Home
-                                        width={24}
-                                        height={24}
-                                        fill={"#4D7C0F"}
-                                    />
-                                </View>
-                            ),
-                        }}
-                    />
-                    <Drawer.Screen
-                        name="campingTrips/addTripPage2"
-                        options={{
-                            headerTitle: "Camping Trips",
-                            drawerLabel: () => (
-                                <View className="flex-auto">
-                                    <Text className="flex-auto ">Deneme</Text>
-                                </View>
-                            ),
-                            drawerIcon: () => (
-                                <View className="flex-1">
-                                    <Home
-                                        width={24}
-                                        height={24}
-                                        fill={"#4D7C0F"}
-                                    />
-                                </View>
+                                <Home width={24} height={24} fill={"#4D7C0F"} />
                             ),
                         }}
                     />

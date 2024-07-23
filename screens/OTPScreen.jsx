@@ -1,4 +1,3 @@
-import { FontAwesome5 } from "@expo/vector-icons";
 import OTPInputView from "@twotalltotems/react-native-otp-input";
 import { router } from "expo-router";
 import PropTypes from "prop-types";
@@ -11,6 +10,7 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
+import ChevronLeft from "../assets/icon/Outline/chevron-left.svg";
 import { Button } from "../components/Button";
 
 const OTPScreen = ({ route }) => {
@@ -33,11 +33,7 @@ const OTPScreen = ({ route }) => {
                 <View style={{ flex: 1 }} className="px-10">
                     <TouchableOpacity onPress={returnLoginScreen}>
                         <View className="flex-row items-center mt-4">
-                            <FontAwesome5
-                                name="chevron-left"
-                                size={14}
-                                color="black"
-                            />
+                            <ChevronLeft width={32} height={32} fill={"#000"} />
                             <Text
                                 style={{ fontFamily: "SF-Pro-Display-Medium" }}
                                 className="text-2xl ml-4 "

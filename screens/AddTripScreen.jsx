@@ -1,12 +1,14 @@
 import React from "react";
 import { Text, View } from "react-native";
 import { Button } from "../components/Button";
+import Header from "../components/Header";
 import Empty from "./../assets/images/common/Empty.svg";
 import { Card } from "./../components/Card";
 
 const AddTripScreen = () => {
     return (
-        <View className="flex-auto p-4  space-y-4">
+        <View className="flex-auto p-4 space-y-4">
+            <Header title={"Camping Trips"} />
             <View className="flex-initial">
                 <Card
                     type="success"

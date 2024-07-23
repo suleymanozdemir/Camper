@@ -77,7 +77,7 @@ export default function RootLayout() {
                     <Stack.Screen name="login" />
                     <Stack.Screen name="forgotPassword" />
                     <Stack.Screen name="register/index" />
-                    <Stack.Screen name="home" />
+                    <Stack.Screen name="home" />;
                 </Stack>
             </ThemeProvider>
         </PersistQueryClientProvider>

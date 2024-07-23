@@ -1,6 +1,6 @@
 import qs from "querystring";
 
-export const API_URL = "http://192.168.1.132:1337/api";
+export const API_URL = "http://10.20.10.121:1337/api";
 
 async function fetcher({ path, query, signal, filter }) {
     const querystring = qs.stringify(query, {
@@ -34,4 +34,11 @@ async function mutater({ method = "POST", path, query, payload, signal }) {
     } catch (error) {
         console.log(error);
     }
+}
+
+export async function createCampArea(payload) {
+    return mutater({
+        path: "camping-areas",
+        payload: { data: payload },
+    });
 }

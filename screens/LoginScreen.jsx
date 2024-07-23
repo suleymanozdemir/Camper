@@ -14,9 +14,11 @@ import * as yup from "yup";
 import Logo from "../assets/images/logo/Logo.svg";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
+import Spin from "../components/Spining";
 import { API_URL } from "../services/api";
 
 const LoginScreen = () => {
+    const [loading, setLoading] = useState(false);
     const [values, setValues] = useState({
         identifier: null,
         password: null,
@@ -36,6 +38,7 @@ const LoginScreen = () => {
 
     const handleSubmit = useCallback(async (values) => {
         setValues(values);
+        console.log("deneme");
         try {
             const res = await fetch(`${API_URL}/auth/local`, {
                 method: "POST",
@@ -47,12 +50,18 @@ const LoginScreen = () => {
             console.log(res);
             if (res.ok) {
                 const response = await res.json();
-                console.log();
-                await AsyncStorage.setItem("token", response.jwt);
-                router.navigate("/(home)/campingTrips/addTripPage");
+                console.log(response, "response");
+                await AsyncStorage.setItem(
+                    "token",
+                    JSON.stringify(response.jwt)
+                );
+
+                router.navigate("/(app)/(home)/addTripPage");
+            } else {
+                console.log(res);
             }
         } catch (error) {
-            console.log(error.name, "error");
+            console.log(error, "error");
         }
     }, []);
 
@@ -66,6 +75,7 @@ const LoginScreen = () => {
                 keyboardShouldPersistTaps={"always"}
                 keyboardDismissMode={"on-drag"}
             >
+                <Spin />
                 <View style={{ flex: 1, paddingHorizontal: 42 }}>
                     <View style={{ flex: 1, justifyContent: "center" }}>
                         <Logo width={"100%"} height={63} />

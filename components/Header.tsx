@@ -16,7 +16,7 @@ const Header = ({ title }) => {
     };
 
     const openNotification = () => {
-        router.navigate("/(home)/campingTrips/notificationsPage");
+        router.push("/(home)/notificationsPage");
     };
 
     return (

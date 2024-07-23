@@ -1,7 +1,7 @@
 import React from "react";
 import { SafeAreaView } from "react-native";
-import DrawerSceneWrapper from "../../../components/DrawerSceneWrapper";
-import AddTripScreen from "../../../screens/AddTripScreen";
+import DrawerSceneWrapper from "../../../../components/DrawerSceneWrapper";
+import AddTripScreen from "../../../../screens/AddTripScreen";
 
 const AddTripPage = () => {
     return (

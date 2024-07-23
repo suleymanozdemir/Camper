@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import React from "react";
 import { Text, View } from "react-native";
 import { Button } from "../components/Button";
@@ -27,7 +28,11 @@ const AddTripScreen = () => {
                 </Text>
             </View>
             <View className="flex-initial px-4">
-                <Button buttonType="success" label="Start New Trip" />
+                <Button
+                    buttonType="success"
+                    label="Start New Trip"
+                    onPress={() => router.navigate("/addTripFormPage")}
+                />
             </View>
         </View>
     );

@@ -44,8 +44,16 @@ export default function RootLayout() {
     useEffect(() => {
         if (loaded || error) {
             SplashScreen.hideAsync();
+            getToken();
         }
     }, [loaded]);
+
+    const getToken = async () => {
+        const token = await AsyncStorage.getItem("token");
+        if (token) {
+            //return router.replace("/(app)/(home)/(trip)/addTripPage");
+        }
+    };
 
     if (!loaded && !error) {
         return null;
@@ -60,12 +68,14 @@ export default function RootLayout() {
                 value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
             >
                 <Stack
+                    initialRouteName="index"
                     screenOptions={{
                         headerShown: false,
                     }}
                 >
                     <Stack.Screen name="index" />
                     <Stack.Screen name="login" />
+                    <Stack.Screen name="(app)/(home)" />
                 </Stack>
             </ThemeProvider>
         </PersistQueryClientProvider>

@@ -7,8 +7,10 @@ import Grid from "../assets/icon/Outline/grid.svg";
 
 type Header = {
     title: string;
+    showNotification: boolean;
 };
-const Header = ({ title }) => {
+
+const Header = ({ title, showNotification = true }: Header) => {
     const navigation = useNavigation();
 
     const openDrawer = () => {
@@ -20,7 +22,7 @@ const Header = ({ title }) => {
     };
 
     return (
-        <View className="flex-initial flex-row items-center justify-between">
+        <View className="flex-initial flex-row items-center justify-between px-4">
             <View>
                 <TouchableOpacity onPress={openDrawer}>
                     <Grid width={32} height={32} fill={"#000"} />
@@ -35,9 +37,11 @@ const Header = ({ title }) => {
                 </Text>
             </View>
             <View>
-                <TouchableOpacity onPress={openNotification}>
-                    <Bell width={32} height={32} fill="#000" />
-                </TouchableOpacity>
+                {showNotification && (
+                    <TouchableOpacity onPress={openNotification}>
+                        <Bell width={32} height={32} fill="#000" />
+                    </TouchableOpacity>
+                )}
             </View>
         </View>
     );

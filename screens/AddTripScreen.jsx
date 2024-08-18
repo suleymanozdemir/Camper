@@ -8,7 +8,7 @@ import { Card } from "./../components/Card";
 
 const AddTripScreen = () => {
     return (
-        <View className="flex-auto p-4 space-y-4">
+        <View className="flex-auto p-4 space-y-4 bg-white">
             <Header title={"Camping Trips"} />
             <View className="flex-initial">
                 <Card

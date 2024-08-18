@@ -9,7 +9,7 @@ import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persi
 import { QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { useFonts } from "expo-font";
-import { SplashScreen, Stack } from "expo-router";
+import { router, SplashScreen, Stack } from "expo-router";
 import { React, useEffect } from "react";
 import { useColorScheme } from "react-native";
 
@@ -51,7 +51,7 @@ export default function RootLayout() {
     const getToken = async () => {
         const token = await AsyncStorage.getItem("token");
         if (token) {
-            //return router.replace("/home/addTripPage");
+            return router.replace("/home");
         }
     };
 
@@ -77,7 +77,7 @@ export default function RootLayout() {
                     <Stack.Screen name="login" />
                     <Stack.Screen name="forgotPassword" />
                     <Stack.Screen name="register/index" />
-                    <Stack.Screen name="home" />
+                    <Stack.Screen name="home/(drawer)" />
                 </Stack>
             </ThemeProvider>
         </PersistQueryClientProvider>

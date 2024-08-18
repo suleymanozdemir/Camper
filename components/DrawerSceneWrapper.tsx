@@ -13,13 +13,13 @@ const DrawerSceneWrapper = ({ children }) => {
     const animatedStyle = useAnimatedStyle(() => ({
         transform: [
             {
-                scale: interpolate(progress.value, [0, 1], [1, 0.85], "clamp"),
+                scale: interpolate(progress.value, [0, 1], [1, 0.7], "clamp"),
             },
             {
                 translateX: interpolate(
                     progress.value,
                     [0, 1],
-                    [0, Platform.OS === "android" ? width - 130 : 0],
+                    [0, Platform.OS === "android" ? width - 130 : -60],
                     "clamp"
                 ),
             },

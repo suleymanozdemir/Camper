@@ -1,6 +1,6 @@
 import React from "react";
 import { SafeAreaView } from "react-native";
-import HowToUseScreen from "../../screens/HowToUseScreen";
+import HowToUseScreen from "../../../screens/HowToUseScreen";
 
 const HowToUsePage = () => {
     return (

@@ -1,6 +1,6 @@
 import qs from "querystring";
 
-export const API_URL = "http://10.20.70.218:1337/api";
+export const API_URL = "http://192.168.1.132:1337/api";
 
 async function fetcher({ path, query, signal, filter }) {
     const querystring = qs.stringify(query, {

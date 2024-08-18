@@ -25,10 +25,7 @@ const LoginScreen = () => {
     });
 
     const loginSchema = yup.object().shape({
-        identifier: yup
-            .string()
-            .email("Please enter valid email")
-            .required("Email address is required."),
+        identifier: yup.string().required("Email address is required."),
         password: yup.string().required("Password is required."),
     });
 
@@ -57,7 +54,7 @@ const LoginScreen = () => {
                     JSON.stringify(response.jwt)
                 );
 
-                router.navigate("/(app)/(home)/home");
+                router.navigate("/home");
             } else {
                 console.log(res);
             }
@@ -97,12 +94,12 @@ const LoginScreen = () => {
                             {({ handleSubmit, handleChange, errors }) => (
                                 <View style={{ flex: 1 }}>
                                     <Input
-                                        type="email"
+                                        type="default"
                                         onChange={handleChange("identifier")}
-                                        label="Email"
-                                        inputMode="email"
+                                        label="User name"
+                                        inputMode="text"
                                         key={1}
-                                        error={errors.email}
+                                        error={errors.identifier}
                                     />
                                     <Input
                                         type="password"

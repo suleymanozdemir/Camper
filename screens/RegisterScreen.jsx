@@ -13,6 +13,7 @@ import { API_URL } from "../services/api";
 const RegisterScreen = () => {
     const [values, setValues] = useState({
         username: null,
+        fullname: null,
         email: null,
         phone: null,
         password: null,
@@ -21,7 +22,8 @@ const RegisterScreen = () => {
     const [loading, setLoading] = useState(false);
 
     const registerSchema = yup.object().shape({
-        username: yup.string().required("Name is required."),
+        username: yup.string().required("Username is required."),
+        fullname: yup.string().required("Full name is required."),
         email: yup
             .string()
             .email("Please enter valid email")
@@ -29,7 +31,7 @@ const RegisterScreen = () => {
         phone: yup.number().required("Phone number is required."),
         password: yup
             .string()
-            .min(8, ({ min }) => `Password must be at least ${min} characters`)
+            .min(6, ({ min }) => `Password must be at least ${min} characters`)
             .required("Password is required."),
     });
 
@@ -47,6 +49,8 @@ const RegisterScreen = () => {
             if (res.ok) {
                 const response = await res.json();
                 router.navigate("/login");
+            } else {
+                console.log(await res.json());
             }
         } catch (error) {
             console.log(error.name, "error");
@@ -96,6 +100,16 @@ const RegisterScreen = () => {
                                     name="username"
                                     onChange={handleChange("username")}
                                     error={errors.username}
+                                />
+                                <Input
+                                    inputMode="text"
+                                    label="Full name"
+                                    secureTextEntry={false}
+                                    type="default"
+                                    isRequired={true}
+                                    name="username"
+                                    onChange={handleChange("fullname")}
+                                    error={errors.fullname}
                                 />
                                 <Input
                                     inputMode="email"
